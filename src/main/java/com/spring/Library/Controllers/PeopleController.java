@@ -53,7 +53,7 @@ public class PeopleController {
     }
     @GetMapping("/new")
     public String newPerson(@ModelAttribute("person") Person person){
-        return "newPerson";
+        return "/adminRole/people/newPerson";
     }
 
     @PostMapping()
@@ -76,7 +76,7 @@ public class PeopleController {
 
     @GetMapping("/edit/{id}")
     public String edit(@ModelAttribute("person") Person person){
-        return "editPerson";
+        return "/adminRole/people/editPerson";
     }
 
     @PatchMapping("/{id}")

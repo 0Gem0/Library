@@ -56,12 +56,12 @@ public class BooksController {
 
     @GetMapping("/new")
     public String createBookGet(@ModelAttribute("book") Book book){
-        return "BookCreate";
+        return "adminRole/books/bookCreate";
     }
 
     @GetMapping("/edit/{id}")
     public String updateBookGet(@PathVariable("id") int id, @ModelAttribute("book") Book book){
-        return "BookUpdate";
+        return "adminRole/books/bookUpdate";
     }
 
     @PostMapping()
