@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p th:text ="${person.getFullName()} + ',' + ${person.getBirthYear()}"></p>
+<a th:href = "@{/templates/adminRole/people}">Назад</a>
+<br>
+
+<div th:if = "${person.getBooks().isEmpty()}">
+    <p th:text = "'Человек не взял ни одну книгу'"></p>
+
+</div>
+
+<div th:if = "${!person.getBooks().isEmpty()}">
+    <p th:text = "'Книги, взятые человеком: ' "></p>
+    <div th:each="book : ${person.getBooks()}">
+        <p th:text="${book.getName()} + ',' + ${book.getAuthor()} + ','+ ${book.getYear()}"> </p>
+        <p th:style="${book.isOverdue()} ? 'color: red;' : null" th:text="'Когда: ' + ${book.getDate_issue()}"></p>
+        <br>
+    </div>
+</div>
+
+<div th:if = "${!books.isEmpty()}">
+    <form th:method="POST" th:action="@{/templates/adminRole/people/{id}(id = ${person.getId()})}">
+        <label for="book"></label>
+        <select name="bookId" id="book">
+            <option th:each="book : ${books}" th:value="${book.getId()}" th:text="${book.getName()}">
+            </option>
+        </select>
+        <input type="submit" value = "Добавить книгу">
+    </form>
+</div>
+
+<div th:if = "${books.isEmpty()}">
+    <p th:text ="'Все книги заняты'"></p>
+</div>
+
+<a th:href = "@{/templates/adminRole/people/edit/{id}(id = ${person.getId()})}">Update</a>
+
+<form th:method = "DELETE" th:action = "@{/templates/adminRole/people/{id}(id = ${person.getId()})}">
+    <input type="submit" value="delete pls">
+</form>
+
+</body>
+</html>

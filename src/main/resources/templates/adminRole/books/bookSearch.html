@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<!--    <p th:text="'Введите поисковый запрос:'"></p>-->
+<form th:method="POST" th:action="@{/templates/adminRole/books/search}" th:object="${book}">
+    <label for="name">Введи название книги</label>
+    <input type="text" th:field="*{name}" id = "name"/>
+    <br>
+    <input type="submit" value="Найти">
+    <div th:if = "${book != null && (book.getName() != null)}">
+        <p th:text="${book.getName()} + ',' + ${book.getAuthor()} + ',' + ${book.getYear()} + ',' + ${book.getPerson().getFullName()}">ID</p>
+        <br>
+        <p th:style="${book.isOverdue()} ? 'color: red;' : null" th:text= "'Когда:' + ${book.getDate_issue()}"></p>
+    </div>
+
+    <div th:if="${book.getName() == null && isSearched}">
+        <p th:text = "'Нет книг по данному запросу'"></p>
+    </div>
+</form>
+
+
+
+</body>
+</html>

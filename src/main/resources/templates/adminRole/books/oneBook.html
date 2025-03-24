@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p th:text="${book.getName()} + ',' + ${book.getAuthor()} + ',' + ${book.getYear()}">ID</p>
+
+<br>
+
+<div th:if = "${book.getPerson() == null}">
+    <p>Книга еще не была взята никем, назначить человеку?</p>
+    <form th:method="POST" th:action="@{/templates/adminRole/books/{id}(id = ${book.getId()})}">
+        <label for="person"></label>
+        <select name = "personId" id="person">
+            <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getFullName()}">
+            </option>
+        </select>
+        <input type="submit" value = "Назначить книгу">
+    </form>
+</div>
+
+<div th:if = "${book.getPerson() != null}">
+    <p th:text = "'Книга была взята: ' + ${book.getPerson().getFullName()}"></p>
+    <br>
+    <p th:style="${book.isOverdue()} ? 'color: red;' : null" th:text= "'Когда:' + ${book.getDate_issue()}"></p>
+    <form th:method = "DELETE" th:action = "@{/templates/adminRole/books/{id}/deletePerson(id=${book.getId()})}">
+        <input type="submit" value="Освободить книгу">
+    </form>
+</div>
+
+
+<a th:href="@{/templates/adminRole/books/edit/{id}(id = ${book.getId()})}">Редактировать!</a>
+
+<form th:method = "DELETE" th:action = "@{/templates/adminRole/books/{id}(id = ${book.getId()})}">
+    <input type="submit" value="Удалить книгу">
+</form>
+
+<a th:href = "@{/templates/adminRole/books}">Back</a>
+
+</body>
+</html>
